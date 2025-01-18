@@ -10,8 +10,8 @@
         .form-group { margin-bottom: 15px; }
         .form-group label { display: block; margin-bottom: 5px; }
         .form-group input, .form-group select { width: 50%; padding: 8px; box-sizing: border-box; }
-        #output { margin-top: 20px; }
-        pre { background: #f4f4f4; padding: 10px; border: 1px solid #ddd; }
+        #output { margin-top: 20px; max-height: 400px; overflow-y: auto; }
+        pre { background: #f4f4f4; padding: 10px; border: 1px solid #ddd; white-space: pre-wrap; word-wrap: break-word; }
         button { padding: 10px 15px; }
         .form-group-inline {
             display: flex;
@@ -22,12 +22,8 @@
             justify-content: space-between;
             flex-wrap: wrap;
         }
-        .form-container {
+        .form-container, .output-container {
             flex: 1;
-            min-width: 300px;
-        }
-        .output-container {
-            flex: 2;
             min-width: 300px;
         }
         .form-container {

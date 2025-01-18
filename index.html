@@ -48,43 +48,43 @@
                 <div class="form-group">
                     <label for="type">Type</label>
                     <select id="type" name="type" onchange="toggleFields()">
-                        <option value="square">Square</option>
+                        <option value="rectangle">Rectangle</option>
                         <option value="circle">Circle</option>
                     </select>
                 </div>
                 <div class="form-group-inline">
                     <div class="form-group" id="widthGroup">
-                        <label for="width">Width</label>
+                        <label for="width">Width (mm)</label>
                         <input type="number" step="any" id="width" name="width" value="10" required>
                     </div>
                     <div class="form-group" id="heightGroup">
-                        <label for="height">Height</label>
+                        <label for="height">Height (mm)</label>
                         <input type="number" step="any" id="height" name="height" value="10" required>
                     </div>
                 </div>
                 <div class="form-group" id="diameterGroup" style="display: none;">
-                    <label for="diameter">Diameter</label>
+                    <label for="diameter">Diameter (mm)</label>
                     <input type="number" step="any" id="diameter" name="diameter" value="10" required>
                 </div>
                 <div class="form-group">
-                    <label for="spacing">Spacing</label>
+                    <label for="spacing">Spacing (mm)</label>
                     <input type="number" step="any" id="spacing" name="spacing" value="0.1" required>
                 </div>
                 <div class="form-group">
-                    <label for="lowpower">Low Power</label>
+                    <label for="lowpower">Minimum Power (%)</label>
                     <input type="number" step="any" id="lowpower" name="lowpower" value="0" required>
                 </div>
                 <div class="form-group">
-                    <label for="highpower">Power</label>
+                    <label for="highpower">Maximum Power (%)</label>
                     <input type="number" step="any" id="highpower" name="highpower" value="100" required>
                 </div>
-                <button type="submit">Generate XML</button>
+                <button type="submit">Generate Lightburn Code</button>
             </form>
         </div>
         <div class="output-container">
             <div id="output">
                 <pre><code id="xmlOutput" class="xml"></code></pre>
-                <button id="downloadBtn" disabled>Download XML</button>
+                <button id="downloadBtn" disabled>Download Lightburn File</button>
             </div>
         </div>
     </div>
@@ -97,7 +97,7 @@
             const heightGroup = document.getElementById('heightGroup');
             const diameterGroup = document.getElementById('diameterGroup');
 
-            if (type === 'square') {
+            if (type === 'square' || type === 'rectangle') {
                 widthGroup.style.display = 'block';
                 heightGroup.style.display = 'block';
                 diameterGroup.style.display = 'none';

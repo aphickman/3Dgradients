@@ -80,13 +80,15 @@
                         <input type="number" id="passes" name="passes" value="1" required>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="lowpower">Minimum Power (%)</label>
-                    <input type="number" step="any" id="lowpower" name="lowpower" value="0" required>
-                </div>
-                <div class="form-group">
-                    <label for="highpower">Maximum Power (%)</label>
-                    <input type="number" step="any" id="highpower" name="highpower" value="100" required>
+                <div class="form-group-inline">
+                    <div class="form-group">
+                        <label for="lowpower">Minimum Power (%)</label>
+                        <input type="number" step="any" id="lowpower" name="lowpower" value="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="highpower">Maximum Power (%)</label>
+                        <input type="number" step="any" id="highpower" name="highpower" value="100" required>
+                    </div>
                 </div>
                 <button type="submit">Generate Lightburn Code</button>
             </form>

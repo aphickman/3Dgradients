@@ -66,9 +66,19 @@
                     <label for="diameter">Diameter (mm)</label>
                     <input type="number" step="any" id="diameter" name="diameter" value="10" required>
                 </div>
-                <div class="form-group">
-                    <label for="spacing">Spacing (mm)</label>
-                    <input type="number" step="any" id="spacing" name="spacing" value="0.1" required>
+                <div class="form-group-inline">
+                    <div class="form-group">
+                        <label for="spacing">Cut Spacing (mm)</label>
+                        <input type="number" step="any" id="spacing" name="spacing" value="0.1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="speed">Speed (mm/s)</label>
+                        <input type="number" step="any" id="speed" name="speed" value="5" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="passes">Passes</label>
+                        <input type="number" id="passes" name="passes" value="1" required>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="lowpower">Minimum Power (%)</label>

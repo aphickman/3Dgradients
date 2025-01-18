@@ -6,6 +6,8 @@ document.getElementById('gradientForm').addEventListener('submit', function(even
     const height = parseFloat(document.getElementById('height').value);
     const diameter = parseFloat(document.getElementById('diameter').value);
     const spacing = parseFloat(document.getElementById('spacing').value);
+    const speed = parseFloat(document.getElementById('speed').value);
+    const passes = parseFloat(document.getElementById('passes').value);
     const lowpower = parseFloat(document.getElementById('lowpower').value);
     const highpower = parseFloat(document.getElementById('highpower').value);
 
@@ -18,7 +20,8 @@ document.getElementById('gradientForm').addEventListener('submit', function(even
         xml += '    <name Value="C00"/>\n';
         xml += '    <maxPower Value="20"/>\n';
         xml += '    <maxPower2 Value="20"/>\n';
-        xml += '    <speed Value="100"/>\n';
+        xml += `    <speed Value="${speed}"/>\n`;
+        xml += `    <numPasses Value="${passes}"/>\n`;
         xml += '    <priority Value="0"/>\n';
         xml += '  </CutSetting>\n';
         xml += '  <Shape Type="Group">\n';
@@ -45,7 +48,8 @@ document.getElementById('gradientForm').addEventListener('submit', function(even
         xml += '    <name Value="C00"/>\n';
         xml += '    <maxPower Value="20"/>\n';
         xml += '    <maxPower2 Value="20"/>\n';
-        xml += '    <speed Value="100"/>\n';
+        xml += `    <speed Value="${speed}"/>\n`;
+        xml += `    <numPasses Value="${passes}"/>\n`;
         xml += '    <priority Value="0"/>\n';
         xml += '  </CutSetting>\n';
         xml += '  <CutSetting type="Offset">\n';
@@ -53,7 +57,8 @@ document.getElementById('gradientForm').addEventListener('submit', function(even
         xml += '    <name Value="C01"/>\n';
         xml += '    <maxPower Value="20"/>\n';
         xml += '    <maxPower2 Value="20"/>\n';
-        xml += '    <speed Value="100"/>\n';
+        xml += `    <speed Value="${speed}"/>\n`;
+        xml += `    <numPasses Value="${passes}"/>\n`;
         xml += '    <priority Value="1"/>\n';
         xml += '  </CutSetting>\n';
         xml += '  <Shape Type="Group">\n';

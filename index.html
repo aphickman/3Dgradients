@@ -22,8 +22,12 @@
             justify-content: space-between;
             flex-wrap: wrap;
         }
-        .form-container, .output-container {
+        .form-container {
             flex: 1;
+            min-width: 300px;
+        }
+        .output-container {
+            flex: 2;
             min-width: 300px;
         }
         .form-container {
@@ -83,8 +87,8 @@
         </div>
         <div class="output-container">
             <div id="output">
-                <pre><code id="xmlOutput" class="xml"></code></pre>
                 <button id="downloadBtn" disabled>Download Lightburn File</button>
+                <pre><code id="xmlOutput" class="xml"></code></pre>
             </div>
         </div>
     </div>

@@ -47,24 +47,42 @@
             <form id="gradientForm">
                 <div class="form-group">
                     <label for="type">Type</label>
-                    <select id="type" name="type" onchange="toggleFields()">
+                    <select id="type" name="type" onchange="toggleFields()" required>
                         <option value="rectangle">Rectangle</option>
                         <option value="circle">Circle</option>
                     </select>
                 </div>
-                <div class="form-group-inline">
-                    <div class="form-group" id="widthGroup">
+                <div class="form-group-inline" id="rectangleFields">
+                    <div class="form-group" id="widthGroup" style="flex:1">
                         <label for="width">Width (mm)</label>
                         <input type="number" step="any" id="width" name="width" value="10" title="Enter the rectangle width in millimeters" required>
                     </div>
-                    <div class="form-group" id="heightGroup">
+                    <div class="form-group" id="heightGroup" style="flex:1">
                         <label for="height">Height (mm)</label>
                         <input type="number" step="any" id="height" name="height" value="10" title="Enter the rectangle height in millimeters" required>
                     </div>
+                    <div class="form-group" id="directionGroup" style="flex:2">
+                        <label for="direction">Gradient Direction</label>
+                        <select id="direction" name="direction" required>
+                            <option value="right">Left to Right</option>
+                            
+                        </select>
+                    </div>
                 </div>
-                <div class="form-group" id="diameterGroup" style="display: none;">
-                    <label for="diameter">Diameter (mm)</label>
-                    <input type="number" step="any" id="diameter" name="diameter" value="10" title="Enter the circle diameter in millimeters" required>
+                <div class="form-group-inline" id="circleFields">
+                    <div class="form-group" id="diameterGroup">
+                        <label for="diameter">Diameter (mm)</label>
+                        <input type="number" step="any" id="diameter" name="diameter" value="10" title="Enter the circle diameter in millimeters" required>
+                    </div>
+                    <div class="form-group" id="concaveTypeGroup">
+                        <label for="concave">Concave</label>
+                        <input type="radio" id="concave" name="circleType" value="concave" checked required>
+                    </div>
+                    <div class="form-group" id="convexGroup">
+                        <label for="convex">Convex</label>
+                        <input type="radio" id="convex" name="circleType" value="convex" required>
+                        
+                    </div>
                 </div>
                 <div class="form-group-inline">
                     <div class="form-group">
@@ -109,14 +127,14 @@
             const heightGroup = document.getElementById('heightGroup');
             const diameterGroup = document.getElementById('diameterGroup');
 
-            if (type === 'square' || type === 'rectangle') {
-                widthGroup.style.display = 'block';
-                heightGroup.style.display = 'block';
-                diameterGroup.style.display = 'none';
+            if (type === 'rectangle') {
+                rectangleFields.style.display = 'flex';
+                rectangleFields.style.gap = '10px';
+                circleFields.style.display = 'none';
             } else if (type === 'circle') {
-                widthGroup.style.display = 'none';
-                heightGroup.style.display = 'none';
-                diameterGroup.style.display = 'block';
+                rectangleFields.style.display = 'none';
+                circleFields.style.display = 'flex';
+                circleFields.style.gap = '10px';
             }
         }
 

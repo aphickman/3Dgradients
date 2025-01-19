@@ -4,7 +4,9 @@ document.getElementById('gradientForm').addEventListener('submit', function(even
     const type = document.getElementById('type').value;
     const width = parseFloat(document.getElementById('width').value);
     const height = parseFloat(document.getElementById('height').value);
+    const direction = document.getElementById('direction').value;
     const diameter = parseFloat(document.getElementById('diameter').value);
+    const circleType = document.querySelector( 'input[name="circleType"]:checked').value;
     const spacing = parseFloat(document.getElementById('spacing').value);
     const speed = parseFloat(document.getElementById('speed').value);
     const passes = parseFloat(document.getElementById('passes').value);
@@ -64,19 +66,26 @@ document.getElementById('gradientForm').addEventListener('submit', function(even
         xml += '  <Shape Type="Group">\n';
         xml += '    <XForm>1 0 0 1 0 0</XForm>\n';
         xml += '    <Children>\n';
-        const numlines = Math.round((width / 2) / spacing);
+        const numlines = Math.round((diameter / 2) / spacing);
+        let powerScale = 0;
         for (let linenum = 0; linenum < numlines-1; linenum++) {
-            const powerScale = (lowpower + ((highpower - lowpower) * linenum / numlines)).toFixed(2);
-            const rx = (width / 2 - spacing * linenum).toFixed(6);
-            const ry = (width / 2 - spacing * linenum).toFixed(6);
+            if (circleType == 'concave') {
+                powerScale = (lowpower + ((highpower - lowpower) * linenum / (numlines - 1))).toFixed(2);
+            }
+            else if (circleType == 'convex') {
+                powerScale = (highpower - ((highpower - lowpower) * linenum / (numlines - 1))).toFixed(2);
+            }
+            const rx = (diameter / 2 - spacing * linenum).toFixed(6);
+            const ry = (diameter / 2 - spacing * linenum).toFixed(6);
             xml += `      <Shape Type="Ellipse" CutIndex="0" CutOrder="${linenum}" PowerScale="${powerScale}" Rx="${rx}" Ry="${ry}">\n`;
-            xml += `        <XForm>1 0 0 1 ${width / 2} ${width / 2}</XForm>\n`;
+            xml += `        <XForm>1 0 0 1 ${diameter / 2} ${diameter / 2}</XForm>\n`;
             xml += `      </Shape>\n`;
         }
-        const rx = (width / 2 - spacing * (numlines - 1)).toFixed(6);
-        const ry = (width / 2 - spacing * (numlines - 1)).toFixed(6);
-        xml += `      <Shape Type="Ellipse" CutIndex="1" CutOrder="${numlines}" PowerScale="${highpower}" Rx="${rx}" Ry="${ry}">\n`;
-        xml += `        <XForm>1 0 0 1 ${width / 2} ${width / 2}</XForm>\n`;
+        const rx = (diameter / 2 - spacing * (numlines - 1)).toFixed(6);
+        const ry = (diameter / 2 - spacing * (numlines - 1)).toFixed(6);
+        const finalPowerScale = (circleType == 'concave') ? highpower : (circleType == 'convex') ? lowpower : 0;
+        xml += `      <Shape Type="Ellipse" CutIndex="1" CutOrder="${numlines}" PowerScale="${finalPowerScale}" Rx="${rx}" Ry="${ry}">\n`;
+        xml += `        <XForm>1 0 0 1 ${diameter / 2} ${diameter / 2}</XForm>\n`;
         xml += `      </Shape>\n`;
         xml += '    </Children>\n';
         xml += '  </Shape>\n';

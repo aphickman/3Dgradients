@@ -45,7 +45,13 @@ document.getElementById('gradientForm').addEventListener('submit', function(even
         }
         xml += `        <PrimList>L0 1</PrimList>\n`;
         xml += `      </Shape>\n`;
-        const numlines = Math.round(width / spacing);
+        let numlines = 0;
+        if (direction == 'right' || direction == 'left') {
+            numlines = Math.round(width / spacing);
+        }
+        else if (direction == 'up' || direction == 'down') {
+            numlines = Math.round(height / spacing);
+        }
         for (let linenum = 1; linenum <= numlines; linenum++) {
             const powerScale = (lowpower + ((highpower - lowpower) * linenum / numlines)).toFixed(2);
             xml += `      <Shape Type="Path" CutIndex="0" CutOrder="${linenum}" PowerScale="${powerScale}" VertID="0" PrimID="0">\n`;
@@ -53,13 +59,13 @@ document.getElementById('gradientForm').addEventListener('submit', function(even
                 xml += `        <XForm>1 0 0 1 ${(spacing * linenum).toFixed(6)} 0</XForm>\n`;
             }
             else if (direction == 'left') {
-                xml += `        <XForm>1 0 0 1 ${width - (spacing * linenum).toFixed(6)} 0</XForm>\n`;
+                xml += `        <XForm>1 0 0 1 -${(spacing * linenum).toFixed(6)} 0</XForm>\n`;
             }
             else if (direction == 'up') {
                 xml += `        <XForm>1 0 0 1 0 ${(spacing * linenum).toFixed(6)}</XForm>\n`;
             }
             else if (direction == 'down') {
-                xml += `        <XForm>1 0 0 1 0 ${height - (spacing * linenum).toFixed(6)}</XForm>\n`;
+                xml += `        <XForm>1 0 0 1 0 -${(spacing * linenum).toFixed(6)}</XForm>\n`;
             }
             xml += `      </Shape>\n`;
         }

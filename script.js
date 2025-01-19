@@ -31,14 +31,36 @@ document.getElementById('gradientForm').addEventListener('submit', function(even
         xml += '    <Children>\n';
         xml += `      <Shape Type="Path" CutIndex="0" CutOrder="0" PowerScale="${lowpower}" VertID="0" PrimID="0">\n`;
         xml += `        <XForm>1 0 0 1 0 0</XForm>\n`;
-        xml += `        <VertList>V0 0V0 ${height}</VertList>\n`;
+        if (direction == 'right') {
+            xml += `        <VertList>V0 0V0 ${height}</VertList>\n`;
+        }
+        else if (direction == 'left') {
+            xml += `        <VertList>V${width} 0V${width} ${height}</VertList>\n`;
+        }
+        else if (direction == 'up') {
+            xml += `        <VertList>V0 0V${width} 0</VertList>\n`;
+        }
+        else if (direction == 'down') {
+            xml += `        <VertList>V0 ${height}V${width} ${height}</VertList>\n`;
+        }
         xml += `        <PrimList>L0 1</PrimList>\n`;
         xml += `      </Shape>\n`;
         const numlines = Math.round(width / spacing);
         for (let linenum = 1; linenum <= numlines; linenum++) {
             const powerScale = (lowpower + ((highpower - lowpower) * linenum / numlines)).toFixed(2);
             xml += `      <Shape Type="Path" CutIndex="0" CutOrder="${linenum}" PowerScale="${powerScale}" VertID="0" PrimID="0">\n`;
-            xml += `        <XForm>1 0 0 1 ${(spacing * linenum).toFixed(6)} 0</XForm>\n`;
+            if (direction == 'right') {
+                xml += `        <XForm>1 0 0 1 ${(spacing * linenum).toFixed(6)} 0</XForm>\n`;
+            }
+            else if (direction == 'left') {
+                xml += `        <XForm>1 0 0 1 ${width - (spacing * linenum).toFixed(6)} 0</XForm>\n`;
+            }
+            else if (direction == 'up') {
+                xml += `        <XForm>1 0 0 1 0 ${(spacing * linenum).toFixed(6)}</XForm>\n`;
+            }
+            else if (direction == 'down') {
+                xml += `        <XForm>1 0 0 1 0 ${height - (spacing * linenum).toFixed(6)}</XForm>\n`;
+            }
             xml += `      </Shape>\n`;
         }
         xml += '    </Children>\n';

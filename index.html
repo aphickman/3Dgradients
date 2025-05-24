@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="3D Gradient Generator for Lightburn - Create 3D laser cut patterns">
     <title>3D Gradient Generator</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/default.min.css">
     <style>
@@ -123,9 +124,32 @@
             background-color: var(--secondary-color);
         }
         
+        .primary-button {
+            background-color: var(--accent-color);
+            font-weight: bold;
+            padding: 12px 20px;
+        }
+        
+        .primary-button:hover {
+            background-color: #c0392b;
+        }
+        
         button:disabled {
             background-color: #cccccc;
             cursor: not-allowed;
+        }
+        
+        .download-button {
+            background-color: #27ae60;
+            margin-bottom: 15px;
+        }
+        
+        .download-button:hover {
+            background-color: #2ecc71;
+        }
+        
+        .download-button:disabled {
+            background-color: #cccccc;
         }
         
         .instructions {
@@ -183,6 +207,13 @@
             .form-group input, .form-group select {
                 width: 100%;
                 font-size: 16px; /* Prevents zoom on iOS */
+                padding: 12px; /* Larger touch target */
+            }
+            
+            button {
+                width: 100%; /* Full-width buttons on mobile */
+                padding: 12px; /* Larger touch target */
+                margin-bottom: 10px;
             }
             
             h1 {
@@ -197,6 +228,16 @@
             /* Override specific form-group-inline that should stay as rows */
             #circleFields {
                 flex-direction: row;
+            }
+            
+            /* Better spacing on mobile */
+            .page-container {
+                padding: 10px;
+            }
+            
+            /* Improved mobile output viewing */
+            pre {
+                font-size: 0.8rem;
             }
         }
     </style>
@@ -313,12 +354,12 @@
                         <div class="option-description">Ending power level</div>
                     </div>
                 </div>
-                <button type="submit">Generate Lightburn Code</button>
+                <button type="submit" class="primary-button">Generate Lightburn Code</button>
             </form>
         </div>
         <div class="output-container">
             <h3>Generated Code</h3>
-            <button id="downloadBtn" disabled>Download Lightburn File</button>
+            <button id="downloadBtn" class="download-button" disabled>Download Lightburn File</button>
             <div id="output">
                 <pre><code id="xmlOutput" class="xml">Code will appear here after generation.</code></pre>
             </div>

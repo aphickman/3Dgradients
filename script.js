@@ -172,7 +172,7 @@ document.getElementById('gradientForm').addEventListener('submit', function(even
             const x4 = (-currentWidth / 2).toFixed(6);
             const y4 = (currentHeight / 2).toFixed(6);
             
-            xml += `      <Shape Type="Path" CutIndex="0" CutOrder="${linenum}" PowerScale="${powerScale}" VertID="0" PrimID="0">\n`;
+            xml += `      <Shape Type="Rect" CutIndex="0" CutOrder="${linenum}" PowerScale="${powerScale}" VertID="0" PrimID="0">\n`;
             xml += `        <XForm>1 0 0 1 ${pyramidWidth / 2} ${pyramidHeight / 2}</XForm>\n`;
             xml += `        <VertList>V${x1} ${y1}V${x2} ${y2}V${x3} ${y3}V${x4} ${y4}</VertList>\n`;
             xml += `        <PrimList>L0 1L1 2L2 3L3 0</PrimList>\n`;

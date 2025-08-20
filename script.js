@@ -7,6 +7,8 @@ document.getElementById('gradientForm').addEventListener('submit', function(even
     const direction = document.getElementById('direction').value;
     const diameter = parseFloat(document.getElementById('diameter').value);
     const circleType = document.querySelector( 'input[name="circleType"]:checked').value;
+    const pyramidWidth = parseFloat(document.getElementById('pyramidWidth').value);
+    const pyramidHeight = parseFloat(document.getElementById('pyramidHeight').value);
     const spacing = parseFloat(document.getElementById('spacing').value);
     const speed = parseFloat(document.getElementById('speed').value);
     const passes = parseFloat(document.getElementById('passes').value);
@@ -115,6 +117,68 @@ document.getElementById('gradientForm').addEventListener('submit', function(even
         xml += `      <Shape Type="Ellipse" CutIndex="1" CutOrder="${numlines}" PowerScale="${finalPowerScale}" Rx="${rx}" Ry="${ry}">\n`;
         xml += `        <XForm>1 0 0 1 ${diameter / 2} ${diameter / 2}</XForm>\n`;
         xml += `      </Shape>\n`;
+        xml += '    </Children>\n';
+        xml += '  </Shape>\n';
+    }
+    else if (type === 'pyramid') {
+        xml += '  <CutSetting type="Cut">\n';
+        xml += '    <index Value="0"/>\n';
+        xml += '    <name Value="C00"/>\n';
+        xml += '    <maxPower Value="20"/>\n';
+        xml += '    <maxPower2 Value="20"/>\n';
+        xml += `    <speed Value="${speed}"/>\n`;
+        xml += `    <numPasses Value="${passes}"/>\n`;
+        xml += '    <priority Value="0"/>\n';
+        xml += '  </CutSetting>\n';
+        xml += '  <CutSetting type="Offset">\n';
+        xml += '    <index Value="1"/>\n';
+        xml += '    <name Value="C01"/>\n';
+        xml += '    <maxPower Value="20"/>\n';
+        xml += '    <maxPower2 Value="20"/>\n';
+        xml += `    <speed Value="${speed}"/>\n`;
+        xml += `    <numPasses Value="${passes}"/>\n`;
+        xml += '    <priority Value="1"/>\n';
+        xml += '  </CutSetting>\n';
+        xml += '  <Shape Type="Group">\n';
+        xml += '    <XForm>1 0 0 1 0 0</XForm>\n';
+        xml += '    <Children>\n';
+        
+        // Calculate number of rectangular layers based on the smaller dimension
+        const minDimension = Math.min(pyramidWidth, pyramidHeight);
+        const numlines = Math.round((minDimension / 2) / spacing);
+        
+        for (let linenum = 0; linenum < numlines; linenum++) {
+            // Calculate the size of this rectangle layer
+            const widthReduction = spacing * linenum;
+            const heightReduction = spacing * linenum;
+            const currentWidth = pyramidWidth - 2 * widthReduction;
+            const currentHeight = pyramidHeight - 2 * heightReduction;
+            
+            // Skip if rectangle becomes too small
+            if (currentWidth <= 0 || currentHeight <= 0) {
+                break;
+            }
+            
+            // Calculate power scale
+            const powerScale = (lowpower + ((highpower - lowpower) * linenum / (numlines - 1))).toFixed(2);
+            
+            // Create a rectangular path with 4 corners
+            const x1 = (-currentWidth / 2).toFixed(6);
+            const y1 = (-currentHeight / 2).toFixed(6);
+            const x2 = (currentWidth / 2).toFixed(6);
+            const y2 = (-currentHeight / 2).toFixed(6);
+            const x3 = (currentWidth / 2).toFixed(6);
+            const y3 = (currentHeight / 2).toFixed(6);
+            const x4 = (-currentWidth / 2).toFixed(6);
+            const y4 = (currentHeight / 2).toFixed(6);
+            
+            xml += `      <Shape Type="Path" CutIndex="0" CutOrder="${linenum}" PowerScale="${powerScale}" VertID="0" PrimID="0">\n`;
+            xml += `        <XForm>1 0 0 1 ${pyramidWidth / 2} ${pyramidHeight / 2}</XForm>\n`;
+            xml += `        <VertList>V${x1} ${y1}V${x2} ${y2}V${x3} ${y3}V${x4} ${y4}</VertList>\n`;
+            xml += `        <PrimList>L0 1L1 2L2 3L3 0</PrimList>\n`;
+            xml += `      </Shape>\n`;
+        }
+        
         xml += '    </Children>\n';
         xml += '  </Shape>\n';
     }

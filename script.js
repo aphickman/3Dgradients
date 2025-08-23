@@ -162,20 +162,8 @@ document.getElementById('gradientForm').addEventListener('submit', function(even
             // Calculate power scale
             const powerScale = (lowpower + ((highpower - lowpower) * linenum / (numlines - 1))).toFixed(2);
             
-            // Create a rectangular path with 4 corners
-            const x1 = (-currentWidth / 2).toFixed(6);
-            const y1 = (-currentHeight / 2).toFixed(6);
-            const x2 = (currentWidth / 2).toFixed(6);
-            const y2 = (-currentHeight / 2).toFixed(6);
-            const x3 = (currentWidth / 2).toFixed(6);
-            const y3 = (currentHeight / 2).toFixed(6);
-            const x4 = (-currentWidth / 2).toFixed(6);
-            const y4 = (currentHeight / 2).toFixed(6);
-            
-            xml += `      <Shape Type="Rect" CutIndex="0" CutOrder="${linenum}" PowerScale="${powerScale}" VertID="0" PrimID="0">\n`;
+            xml += `      <Shape Type="Rect" CutIndex="0" CutOrder="${linenum}" PowerScale="${powerScale}" W="${currentWidth}" H="${currentHeight}" Cr="0">\n`;
             xml += `        <XForm>1 0 0 1 ${pyramidWidth / 2} ${pyramidHeight / 2}</XForm>\n`;
-            xml += `        <VertList>V${x1} ${y1}V${x2} ${y2}V${x3} ${y3}V${x4} ${y4}</VertList>\n`;
-            xml += `        <PrimList>L0 1L1 2L2 3L3 0</PrimList>\n`;
             xml += `      </Shape>\n`;
         }
         

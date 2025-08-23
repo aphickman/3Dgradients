@@ -83,17 +83,9 @@ elif args.type == "pyramid":
         # Skip if rectangle becomes too small
         if current_width <= 0 or current_height <= 0:
             break
-            
-        # Create a rectangular path with 4 corners
-        x1, y1 = -current_width / 2, -current_height / 2
-        x2, y2 = current_width / 2, -current_height / 2
-        x3, y3 = current_width / 2, current_height / 2
-        x4, y4 = -current_width / 2, current_height / 2
         
-        shape = etree.SubElement(children, "Shape", Type="Rect", CutIndex="0", CutOrder=str(linenum), PowerScale=str(args.lowpower + ((args.power - args.lowpower) * linenum / (numlines - 1))), VertID="0", PrimID="0")
+        shape = etree.SubElement(children, "Shape", Type="Rect", CutIndex="0", CutOrder=str(linenum), PowerScale=str(args.lowpower + ((args.power - args.lowpower) * linenum / (numlines - 1))), W=str(current_width), H=str(current_height), Cr="0")
         etree.SubElement(shape, "XForm").text = f"1 0 0 1 {args.width / 2} {args.height / 2}"
-        etree.SubElement(shape, "VertList").text = f"V{x1} {y1}V{x2} {y2}V{x3} {y3}V{x4} {y4}"
-        etree.SubElement(shape, "PrimList").text = "L0 1L1 2L2 3L3 0"
 
 # Write the XML to a file
 tree = etree.ElementTree(root)

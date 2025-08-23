@@ -318,6 +318,14 @@
                         <input type="number" step="any" id="pyramidHeight" name="pyramidHeight" value="10" title="Enter the pyramid height in millimeters" required>
                         <div class="option-description">Height of the pyramid base</div>
                     </div>
+                    <div class="form-group" style="flex:1">
+                        <label for="pyramidDirection">Gradient Direction</label>
+                        <select id="pyramidDirection" name="pyramidDirection" required>
+                            <option value="inward">Inward</option>
+                            <option value="outward">Outward</option>
+                        </select>
+                        <div class="option-description">Direction the gradient transitions from low to high power</div>
+                    </div>
                 </div>
                 <div class="form-group-inline" id="circleFields">
                     <div class="form-group" id="diameterGroup" style="flex:1">

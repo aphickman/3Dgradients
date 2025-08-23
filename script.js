@@ -9,6 +9,7 @@ document.getElementById('gradientForm').addEventListener('submit', function(even
     const circleType = document.querySelector( 'input[name="circleType"]:checked').value;
     const pyramidWidth = parseFloat(document.getElementById('pyramidWidth').value);
     const pyramidHeight = parseFloat(document.getElementById('pyramidHeight').value);
+    const pyramidDirection = document.getElementById('pyramidDirection').value;
     const spacing = parseFloat(document.getElementById('spacing').value);
     const speed = parseFloat(document.getElementById('speed').value);
     const passes = parseFloat(document.getElementById('passes').value);
@@ -146,13 +147,15 @@ document.getElementById('gradientForm').addEventListener('submit', function(even
         // Calculate number of rectangular layers based on the smaller dimension
         const minDimension = Math.min(pyramidWidth, pyramidHeight);
         const numlines = Math.round((minDimension / 2) / spacing);
-        
+        let powerScale = 0;
         for (let linenum = 0; linenum < numlines; linenum++) {
             // Calculate the size of this rectangle layer
             const widthReduction = spacing * linenum;
             const heightReduction = spacing * linenum;
             const currentWidth = pyramidWidth - 2 * widthReduction;
             const currentHeight = pyramidHeight - 2 * heightReduction;
+
+
             
             // Skip if rectangle becomes too small
             if (currentWidth <= 0 || currentHeight <= 0) {
@@ -160,7 +163,12 @@ document.getElementById('gradientForm').addEventListener('submit', function(even
             }
             
             // Calculate power scale
-            const powerScale = (lowpower + ((highpower - lowpower) * linenum / (numlines - 1))).toFixed(2);
+            if (pyramidDirection == 'inward') {
+                powerScale = (lowpower + ((highpower - lowpower) * linenum / (numlines - 1))).toFixed(2);
+            }
+            else if (pyramidDirection == 'outward') {
+                powerScale = (highpower - ((highpower - lowpower) * linenum / (numlines - 1))).toFixed(2);
+            }
             
             xml += `      <Shape Type="Rect" CutIndex="0" CutOrder="${linenum}" PowerScale="${powerScale}" W="${currentWidth}" H="${currentHeight}" Cr="0">\n`;
             xml += `        <XForm>1 0 0 1 ${pyramidWidth / 2} ${pyramidHeight / 2}</XForm>\n`;

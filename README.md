@@ -4,14 +4,14 @@ A tool to generate 3D gradient cutting patterns for use with LightBurn laser sof
 
 ## Features
 
-- Create wedge (rectangular) or cone (circular) 3D gradient patterns
+- Create wedge (rectangular), cone (circular), or pyramid (concentric rectangular) 3D gradient patterns
 - Customize dimensions, spacing, and cut parameters
 - Responsive design works well on both desktop and mobile devices
 - Generate LightBurn-compatible files (.lbrn2)
 
 ## Usage
 
-1. Select the shape type (Wedge or Cone)
+1. Select the shape type (Wedge, Cone, or Pyramid)
 2. Enter dimensions in millimeters
 3. Set cut spacing, speed, and power parameters
 4. Click "Generate Lightburn Code"

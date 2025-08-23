@@ -4,7 +4,7 @@ from lxml import etree
 parser = argparse.ArgumentParser(description="A script that generates a gradient")
 
 # Add arguments
-parser.add_argument("-T", "--type", type=str, choices=["rect", "ellipse"], default="rect", help="The type of gradient to create (default: rect)")
+parser.add_argument("-T", "--type", type=str, choices=["rect", "ellipse", "pyramid"], default="rect", help="The type of gradient to create (default: rect)")
 parser.add_argument("-W", "--width", type=float, default=100.0, help="Width in mm")
 parser.add_argument("-H", "--height", type=float, default=100.0, help="Height in mm")
 parser.add_argument("-S", "--spacing", type=float, default=0.10, help="Spacing in mm")
@@ -59,6 +59,33 @@ elif args.type == "ellipse":
         etree.SubElement(shape, "XForm").text = f"1 0 0 1 {args.width / 2} {args.width / 2}"
     shape = etree.SubElement(children, "Shape", Type="Ellipse", CutIndex="1", CutOrder=str(numlines), PowerScale=str(args.power), Rx=str(args.width / 2 - args.spacing * (numlines - 1)), Ry=str(args.width / 2 - args.spacing * (numlines - 1)))
     etree.SubElement(shape, "XForm").text = f"1 0 0 1 {args.width / 2} {args.width / 2}"
+elif args.type == "pyramid":
+    # Create the Offset CutSetting element for pyramid
+    offset_cut_setting = etree.SubElement(root, "CutSetting", type="Offset")
+    etree.SubElement(offset_cut_setting, "index", Value="1")
+    etree.SubElement(offset_cut_setting, "name", Value="C01")
+    etree.SubElement(offset_cut_setting, "maxPower", Value="20")
+    etree.SubElement(offset_cut_setting, "maxPower2", Value="20")
+    etree.SubElement(offset_cut_setting, "speed", Value="100")
+    etree.SubElement(offset_cut_setting, "priority", Value="1")
+
+    # Calculate number of rectangular layers based on the smaller dimension
+    min_dimension = min(args.width, args.height)
+    numlines = round((min_dimension / 2) / args.spacing)
+    
+    for linenum in range(numlines):
+        # Calculate the size of this rectangle layer
+        width_reduction = args.spacing * linenum
+        height_reduction = args.spacing * linenum
+        current_width = args.width - 2 * width_reduction
+        current_height = args.height - 2 * height_reduction
+        
+        # Skip if rectangle becomes too small
+        if current_width <= 0 or current_height <= 0:
+            break
+        
+        shape = etree.SubElement(children, "Shape", Type="Rect", CutIndex="0", CutOrder=str(linenum), PowerScale=str(args.lowpower + ((args.power - args.lowpower) * linenum / (numlines - 1))), W=str(current_width), H=str(current_height), Cr="0")
+        etree.SubElement(shape, "XForm").text = f"1 0 0 1 {args.width / 2} {args.height / 2}"
 
 # Write the XML to a file
 tree = etree.ElementTree(root)
